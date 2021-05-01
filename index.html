@@ -2,17 +2,19 @@
 <html>
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Engagement&family=Flamenco:wght@300&family=Great+Vibes&family=Italianno&family=Lobster+Two&family=Mulish:wght@200&family=Niconne&family=Norican&family=Rochester&family=Sail&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100&family=Barlow+Condensed:wght@300&family=Mulish:wght@200&family=Open+Sans+Condensed:wght@300&family=Oswald:wght@200&family=Poppins:wght@100&family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             width: 100%;
             height: 100vh;
-            color: darkred;
+            color: #5c172a;
         }
 
         header {
@@ -34,13 +36,20 @@
         }
 
         h1 {
-            font-family: Rochester;
+            font-family: 'Niconne', cursive;
+            font-size: 2.3em;
+        }
+
+        h1,
+        h2 {
+            margin: 0;
+            padding: 0.5em 0;
         }
 
         .container {
             height: 45vh;
             text-align: center;
-            font-size: 2.5em;
+            font-size: 1.2em;
             font-family: 'Barlow Condensed';
         }
 
@@ -50,7 +59,9 @@
             border-bottom: solid 1px transparent;
             transition: border-color 1s linear;
             display: block;
-            padding: 1em;
+            padding: 0.5em;
+            width: 15em;
+            margin: auto;
         }
 
         p {
@@ -59,20 +70,27 @@
         }
 
         a:hover {
-            border-color: darkred;
+            border-color: #5c172a;
         }
     </style>
 </head>
 
-
 <body>
     <header></header>
     <div class="container">
-        <h1>Mashal &amp; Osama</h1>
-        <h2>05.17.21</h2>
-        <p>Mr. &amp; Mrs. Nazir Abbasi request the pleasure of your company to join the wedding reception for their daughter Mashal with Osama Ali on Saturday, May 30th, 2021.</p>
-        <a href="https://www.google.com/maps/place/KDA+Officers+Club/@24.8780395,67.0504011,15z/data=!4m5!3m4!1s0x0:0xa5e1486a8de2a4ee!8m2!3d24.8780307!4d67.0503994">KDA Officer's Club, Lawn A, Kashmir Road.</p>
-            <a href="tel:+923451000815">RSVP:03451000815</a>
+        <h1 id="names">Mashal &amp; Osama</h1>
+        <p id="text">Mr. &amp; Mrs. Nazir Abbasi request the pleasure of your company to join the wedding reception for their daughter Mashal with Osama Ali on Saturday, May 30th, 2021.</p>
+        <a id="location" href="https://www.google.com/maps/place/KDA+Officers+Club/@24.8780395,67.0504011,15z/data=!4m5!3m4!1s0x0:0xa5e1486a8de2a4ee!8m2!3d24.8780307!4d67.0503994">KDA Officer's Club, Lawn A, Kashmir Road.</a>
+        <a id="rsvp" href="tel:+923451000815">RSVP:03451000815</a>
     </div>
     <footer></footer>
+    <script>
+        $(document).ready(function() {
+            $('#names,#date,#location,#rsvp,#text').fadeOut(0);
+            $('#names').fadeIn(2000);
+            $('#text').delay(1500).fadeIn(2000);
+            $('#location').delay(3500).fadeIn(2000);
+            $('#rsvp').delay(5000).fadeIn(2000);
+        })
+    </script>
 </body></html>
