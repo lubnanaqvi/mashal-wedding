@@ -80,6 +80,16 @@
             transition: border-color 1s linear;
             padding: 0.5em;
             margin: auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .container a:hover {
+            border-color: #a11b45;
+        }
+
+        #plug a:hover {
+            border-color: #f6c0b4;
         }
 
         #location {
@@ -137,22 +147,11 @@
                 background-repeat: repeat-x;
             }
 
-            a {
-                border-color: transparent;
-            }
-
-            .container a:hover {
-                border-color: #a11b45;
-            }
-
-            #plug a:hover {
-                border-color: #f6c0b4;
-            }
-
             canvas {
                 z-index: -1;
             }
         }
+
     </style>
 </head>
 
@@ -298,11 +297,11 @@
             $('#text').delay(2000).fadeIn(2000);
             $('#location').delay(3500).fadeIn(2000);
             $('#rsvp').delay(5500).fadeIn(2000);
-            const dotDelay = window.innerWidth >= 791 ? 0 : 7000;
-            setTimeout(function() {
+            if (window.innerWidth >= 790)
                 dots();
-                $("canvas").show();
-            }, dotDelay);
         })
+
     </script>
-</body></html>
+</body>
+
+</html>
