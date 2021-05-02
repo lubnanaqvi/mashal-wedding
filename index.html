@@ -14,21 +14,37 @@
         body {
             width: 100%;
             height: 100vh;
-            color: #5c172a;
+            color: #a11b45;
+            background-color: #a11b45;
+            margin: 0;
+            font-family: 'Barlow Condensed';
+        }
+
+        #wrapper {
+            background-color: white;
+            margin: auto;
+            max-width: 791px;
+
+        }
+
+        #plug {
+            text-align: center;
+            color: #f6c0b4;
+            margin-top: 0.5em;
         }
 
         header {
-            background: url(mobile-header.png);
+            background: url(header.png);
         }
 
         footer {
-            background: url(mobile-footer.png);
+            background: url(footer.png);
         }
 
         header,
         footer {
             height: 25vh;
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             margin: 0;
@@ -36,7 +52,7 @@
         }
 
         h1 {
-            font-family: 'Niconne', cursive;
+            font-family: 'Engagement', cursive;
             font-size: 2.3em;
         }
 
@@ -50,7 +66,11 @@
             height: 45vh;
             text-align: center;
             font-size: 1.2em;
-            font-family: 'Barlow Condensed';
+            margin: 0;
+        }
+
+        .container a {
+            display: block;
         }
 
         a {
@@ -58,10 +78,16 @@
             color: inherit;
             border-bottom: solid 1px transparent;
             transition: border-color 1s linear;
-            display: block;
             padding: 0.5em;
-            width: 15em;
             margin: auto;
+        }
+
+        #location {
+            width: 80%;
+        }
+
+        #rsvp {
+            width: 30%;
         }
 
         p {
@@ -69,28 +95,214 @@
             line-height: 1.2em;
         }
 
-        a:hover {
-            border-color: #5c172a;
+
+        canvas.dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media only screen and (min-width: 791px) {
+            #wrapper {
+                margin: 10vh auto;
+            }
+
+            #plug {
+                margin-top: -5vh;
+            }
+
+            .container {
+                height: 40vh;
+            }
+
+            .container p {
+                width: 70%;
+                margin: auto;
+            }
+
+            #location {
+                width: 35%;
+            }
+
+            #rsvp {
+                width: 15%;
+            }
+
+            header,
+            footer {
+                height: 20vh;
+                background-size: contain;
+                background-repeat: repeat-x;
+            }
+
+            a {
+                border-color: transparent;
+            }
+
+            .container a:hover {
+                border-color: #a11b45;
+            }
+
+            #plug a:hover {
+                border-color: #f6c0b4;
+            }
+
+            canvas {
+                z-index: -1;
+            }
         }
     </style>
 </head>
 
 <body>
-    <header></header>
-    <div class="container">
-        <h1 id="names">Mashal &amp; Osama</h1>
-        <p id="text">Mr. &amp; Mrs. Nazir Abbasi request the pleasure of your company to join the wedding reception for their daughter Mashal with Osama Ali on Saturday, May 30th, 2021.</p>
-        <a id="location" href="https://www.google.com/maps/place/KDA+Officers+Club/@24.8780395,67.0504011,15z/data=!4m5!3m4!1s0x0:0xa5e1486a8de2a4ee!8m2!3d24.8780307!4d67.0503994">KDA Officer's Club, Lawn A, Kashmir Road.</a>
-        <a id="rsvp" href="tel:+923451000815">RSVP:03451000815</a>
+    <div id="wrapper">
+        <canvas class="dots">Your browser does not support canvas.</canvas>
+        <header></header>
+        <div class="container">
+            <h1 id="names">Mashal &amp; Osama</h1>
+            <p id="text">Mr. &amp; Mrs. Nazir Abbasi request the pleasure of your company to join the wedding reception for their daughter Mashal with Osama Ali on Saturday, May 30th, 2021.</p>
+            <a id="location" href="https://www.google.com/maps/place/KDA+Officers+Club/@24.8780395,67.0504011,15z/data=!4m5!3m4!1s0x0:0xa5e1486a8de2a4ee!8m2!3d24.8780307!4d67.0503994">KDA Officer's Club, Lawn A, Kashmir Road.</a>
+            <a id="rsvp" href="tel:+923451000815">RSVP:03451000815</a>
+        </div>
+        <footer></footer>
     </div>
-    <footer></footer>
+    <div id="plug">
+        <p>&copy; <span id="year"></span>All rights reserved - <a href="mailto:styraxly@gmail.com">styrax tech</a></p>
+    </div>
     <script>
+        const dots = () => {
+            var dotMargin = 50;
+            var numRows = 10;
+            var numCols = 20;
+            if (window.innerWidth <= 791) {
+                dotMargin = 10;
+                numCols = 5;
+                numRows = 5;
+            }
+            // Set the colors you want to support in this array
+            var colors = ['#f6c0b4', '#d21e4d'];
+            var directions = ['+', '-'];
+            var speeds = [0.5, 0.3];
+
+            var canvas = $('canvas.dots');
+            var context = canvas[0].getContext('2d');
+            var canvasWidth = canvas.width();
+            var canvasHeight = canvas.height(); // this one is new
+            canvas.attr({
+                height: canvasHeight,
+                width: canvasWidth
+            });
+
+            var dotWidth = ((canvasWidth - (2 * dotMargin)) / numCols) - dotMargin;
+            var dotHeight = ((canvasHeight - (2 * dotMargin)) / numRows) - dotMargin;
+
+            if (dotWidth > dotHeight) {
+                var dotDiameter = dotHeight;
+                var xMargin = (canvasWidth - ((2 * dotMargin) + (numCols * dotDiameter))) / numCols;
+                var yMargin = dotMargin;
+            } else {
+                var dotDiameter = dotWidth;
+                var xMargin = dotMargin;
+                var yMargin = (canvasHeight - ((2 * dotMargin) + (numRows * dotDiameter))) / numRows;
+            }
+
+            // Start with an empty array of dots.
+            var dots = [];
+            dotRadius = window.innerWidth >= 791 ? 5 : 7;
+            for (var i = 0; i < numRows; i++) {
+                for (var j = 0; j < numCols; j++) {
+                    var x = (j * (dotDiameter + xMargin)) + dotMargin + (xMargin / 2) + dotRadius;
+                    var y = (i * (dotDiameter + yMargin)) + dotMargin + (yMargin / 2) + dotRadius;
+                    // Get random color, direction and speed.
+                    var color = colors[Math.floor(Math.random() * colors.length)];
+                    var xMove = directions[Math.floor(Math.random() * directions.length)];
+                    var yMove = directions[Math.floor(Math.random() * directions.length)];
+                    var speed = speeds[Math.floor(Math.random() * speeds.length)];
+                    // Set the object.
+                    var dot = {
+                        x: x,
+                        y: y,
+                        radius: dotRadius,
+                        xMove: xMove,
+                        yMove: yMove,
+                        color: color,
+                        speed: speed
+                    };
+                    // Save it to the dots array.
+                    dots.push(dot);
+                    drawDot(dot);
+                }
+            }
+
+            // Draw each dot in the dots array.
+            for (i = 0; i < dots.length; i++) {
+                drawDot(dots[i]);
+            };
+
+            window.requestAnimationFrame(moveDot);
+
+
+            function moveDot() {
+                context.clearRect(0, 0, canvasWidth, canvasHeight)
+
+                for (i = 0; i < dots.length; i++) {
+
+                    if (dots[i].xMove == '+') {
+                        dots[i].x += dots[i].speed;
+                    } else {
+                        dots[i].x -= dots[i].speed;
+                    }
+                    if (dots[i].yMove == '+') {
+                        dots[i].y += dots[i].speed;
+                    } else {
+                        dots[i].y -= dots[i].speed;
+                    }
+
+                    drawDot(dots[i])
+
+                    if ((dots[i].x + dots[i].radius) >= canvasWidth) {
+                        dots[i].xMove = '-';
+                    }
+                    if ((dots[i].x - dots[i].radius) <= 0) {
+                        dots[i].xMove = '+';
+                    }
+                    if ((dots[i].y + dots[i].radius) >= canvasHeight) {
+                        dots[i].yMove = '-';
+                    }
+                    if ((dots[i].y - dots[i].radius) <= 0) {
+                        dots[i].yMove = '+';
+                    }
+                }
+
+                window.requestAnimationFrame(moveDot);
+            }
+
+            function drawDot(dot) {
+                context.globalAlpha = 0.9;
+                context.beginPath();
+                context.arc(dot.x, dot.y, dot.radius, 0, 2 * Math.PI, false);
+                context.fillStyle = dot.color;
+                context.fill();
+            }
+
+            // ----------------------------------------
+        }
         $(document).ready(function() {
-            $('#names,#date,#location,#rsvp,#text').fadeOut(0);
-            $('#names').fadeIn(2000);
-            $('#text').delay(1500).fadeIn(2000);
+            const d = new Date;
+            $("#year").html(d.getFullYear() + " ")
+            $('#names,#date,#location,#rsvp,#text,header,footer').fadeOut(0);
+            $("header,footer").fadeIn(1000);
+            $('#names').delay(1000).fadeIn(2000);
+            $('#text').delay(2000).fadeIn(2000);
             $('#location').delay(3500).fadeIn(2000);
-            $('#rsvp').delay(5000).fadeIn(2000);
+            $('#rsvp').delay(5500).fadeIn(2000);
+            const dotDelay = window.innerWidth >= 791 ? 0 : 7000;
+            setTimeout(function() {
+                dots();
+                $("canvas").show();
+            }, dotDelay);
         })
     </script>
 </body></html>
