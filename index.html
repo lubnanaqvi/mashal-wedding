@@ -81,15 +81,11 @@
             padding: 0.5em;
             margin: auto;
             position: relative;
-            z-index: 5;
+            z-index: 100;
         }
 
         .container a:hover {
             border-color: #a11b45;
-        }
-
-        #plug a:hover {
-            border-color: #f6c0b4;
         }
 
         #location {
@@ -145,6 +141,10 @@
                 height: 20vh;
                 background-size: contain;
                 background-repeat: repeat-x;
+            }
+
+            #plug a:hover {
+                border-color: #f6c0b4;
             }
 
             canvas {
@@ -209,7 +209,7 @@
 
             // Start with an empty array of dots.
             var dots = [];
-            dotRadius = window.innerWidth >= 791 ? 5 : 7;
+            dotRadius = window.innerWidth >= 791 ? 5 : 3;
             for (var i = 0; i < numRows; i++) {
                 for (var j = 0; j < numCols; j++) {
                     var x = (j * (dotDiameter + xMargin)) + dotMargin + (xMargin / 2) + dotRadius;
@@ -297,8 +297,11 @@
             $('#text').delay(2000).fadeIn(2000);
             $('#location').delay(3500).fadeIn(2000);
             $('#rsvp').delay(5500).fadeIn(2000);
-            if (window.innerWidth >= 790)
+            const dotDelay = window.innerWidth >= 791 ? 0 : 7000;
+            setTimeout(function() {
                 dots();
+                $("canvas").show();
+            }, dotDelay);
         })
 
     </script>
